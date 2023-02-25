@@ -13,10 +13,13 @@ import java.util.List;
 @androidx.room.Dao
 public interface UserDao {
 
+    @Query("SELECT * FROM user_data ORDER BY name ASC")
+    List<UserEntity> getUsers();
+
     // below method is use to
     // add data to database.
     @Insert
-    void insert(UserEntity model);
+    long insert(UserEntity model);
 
     // below method is use to update
     // the data in our database.

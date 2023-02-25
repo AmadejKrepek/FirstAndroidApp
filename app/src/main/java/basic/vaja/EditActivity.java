@@ -32,7 +32,7 @@ public class EditActivity extends AppCompatActivity {
 
         // initializing our variable for our recycler view and fab.
         usersRV = findViewById(R.id.idRVUsers);
-        FloatingActionButton fab = findViewById(R.id.idFABAdd);
+/*        FloatingActionButton fab = findViewById(R.id.idFABAdd);
 
         // adding on click listener for floating action button.
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +43,7 @@ public class EditActivity extends AppCompatActivity {
                 Intent intent = new Intent(EditActivity.this, AddUserActivity.class);
                 startActivityForResult(intent, ADD_USER_REQUEST);
             }
-        });
+        });*/
 
         // setting layout manager to our adapter class.
         usersRV.setLayoutManager(new LinearLayoutManager(this));
@@ -77,7 +77,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 // on recycler view item swiped then we are deleting the item of our recycler view.
-                viewModal.delete(adapter.getCourseAt(viewHolder.getAdapterPosition()));
+                viewModal.delete(adapter.getuserAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(EditActivity.this, "user deleted", Toast.LENGTH_SHORT).show();
             }
         }).
@@ -95,6 +95,9 @@ public class EditActivity extends AppCompatActivity {
                 intent.putExtra(AddUserActivity.EXTRA_NAME, model.getName());
                 intent.putExtra(AddUserActivity.EXTRA_SURNAME, model.getSurname());
                 intent.putExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH, model.getDateOfBirth());
+                intent.putExtra(AddUserActivity.EXTRA_HEART_RATE, model.getHeartRate());
+                intent.putExtra(AddUserActivity.EXTRA_SO2, model.getSo2());
+                intent.putExtra(AddUserActivity.EXTRA_TEMPERATURE, model.getBodyTemperature());
 
                 // below line is to start a new activity and
                 // adding a edit user constant.
@@ -110,9 +113,12 @@ public class EditActivity extends AppCompatActivity {
             String name = data.getStringExtra(AddUserActivity.EXTRA_NAME);
             String surname = data.getStringExtra(AddUserActivity.EXTRA_SURNAME);
             String dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH);
-            UserEntity model = new UserEntity(name, surname, dateOfBirth);
+            String heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE);
+            String so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2);
+            String bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE);
+            UserEntity model = new UserEntity(name, surname, dateOfBirth, heartRate, so2, bodyTemperature);
             viewModal.insert(model);
-            Toast.makeText(this, "user saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User saved", Toast.LENGTH_SHORT).show();
         } else if (requestCode == EDIT_USER_REQUEST && resultCode == RESULT_OK) {
             int id = data.getIntExtra(AddUserActivity.EXTRA_ID, -1);
             if (id == -1) {
@@ -122,12 +128,15 @@ public class EditActivity extends AppCompatActivity {
             String name = data.getStringExtra(AddUserActivity.EXTRA_NAME);
             String userDesc = data.getStringExtra(AddUserActivity.EXTRA_SURNAME);
             String dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH);
-            UserEntity model = new UserEntity(name, userDesc, dateOfBirth);
+            String heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE);
+            String so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2);
+            String bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE);
+            UserEntity model = new UserEntity(name, userDesc, dateOfBirth, heartRate, so2, bodyTemperature);
             model.setId(id);
             viewModal.update(model);
-            Toast.makeText(this, "Course updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Course not saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not saved", Toast.LENGTH_SHORT).show();
         }
     }
 }

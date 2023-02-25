@@ -1,6 +1,7 @@
 package basic.vaja;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,6 +23,10 @@ public class ViewModal extends AndroidViewModel {
         super(application);
         repository = new UserRepository(application);
         allusers = repository.getAllusers();
+    }
+
+    public List<UserEntity> getUsers() {
+        return repository.getUsers();
     }
 
     // below method is use to insert the data to our repository.

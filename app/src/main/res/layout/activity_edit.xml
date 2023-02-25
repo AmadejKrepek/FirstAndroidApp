@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!--fab to add new courses-->
+    <!--fab to add new users-->
+<!--
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/idFABAdd"
         android:layout_width="wrap_content"
@@ -27,5 +28,6 @@
         android:layout_marginBottom="18dp"
         android:src="@android:drawable/ic_input_add"
         app:tint="@color/white" />
+-->
 
 </RelativeLayout>

@@ -37,6 +37,30 @@
             android:layout_margin="10dp"
             android:hint="Date Of Birth" />
 
+        <!--edit text for user heart rate-->
+        <EditText
+            android:id="@+id/idEdtHeartRate"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_margin="10dp"
+            android:hint="Heart Rate" />
+
+        <!--edit text for user so2 -->
+        <EditText
+            android:id="@+id/idEdtSO2"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_margin="10dp"
+            android:hint="SO2" />
+
+        <!--edit text for user temperature -->
+        <EditText
+            android:id="@+id/idEdtTemperature"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_margin="10dp"
+            android:hint="Body Temperature" />
+
         <!--button for saving data to room database-->
         <Button
             android:id="@+id/idBtnSaveUser"

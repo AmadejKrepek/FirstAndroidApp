@@ -16,7 +16,6 @@ public class UserEntity {
     private String so2;
     private String bodyTemperature;
 
-    @Ignore
     public UserEntity (String name, String surname, String dateOfBirth, String heartRate,
                      String so2, String bodyTemperature) {
         this.name = name;
@@ -26,13 +25,6 @@ public class UserEntity {
         this.so2 = so2;
         this.bodyTemperature = bodyTemperature;
     }
-
-    public UserEntity (String name, String surname, String dateOfBirth) {
-        this.name = name;
-        this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getName() {
         return name;
     }

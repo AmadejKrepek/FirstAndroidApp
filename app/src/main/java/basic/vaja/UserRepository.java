@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class UserRepository {
 
@@ -19,6 +20,17 @@ public class UserRepository {
         UserDatabase database = UserDatabase.getInstance(application);
         dao = database.Dao();
         allusers = dao.getAllUsers();
+    }
+
+    public List<UserEntity> getUsers() {
+        try {
+            return new GetUsersAsyncTask().execute().get();
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // creating a method to insert the data to our database.
@@ -44,6 +56,13 @@ public class UserRepository {
     // below method is to read all the users.
     public LiveData<List<UserEntity>> getAllusers() {
         return allusers;
+    }
+
+    private class GetUsersAsyncTask extends AsyncTask<Void, Void, List<UserEntity>> {
+        @Override
+        protected List<UserEntity> doInBackground(Void... voids) {
+            return dao.getUsers();
+        }
     }
 
     // we are creating a async task method to insert new user.

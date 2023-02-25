@@ -44,6 +44,36 @@
             android:text="Date Of Birth"
             android:textColor="@color/black"
             android:textSize="15sp" />
+
+        <!--text view for our user heartRate-->
+        <TextView
+            android:id="@+id/idUserHeartRate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Heart Rate"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!--text view for our user so2-->
+        <TextView
+            android:id="@+id/idUserSo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="SO2"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <!--text view for our user bodyTemperature-->
+        <TextView
+            android:id="@+id/idUserBodyTemperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Body Temperature"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

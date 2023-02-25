@@ -3,7 +3,7 @@
 
     <string name="name">Ime</string>
     <string name="surname">Priimek</string>
-    <string name="date">Izberi datum</string>
+    <string name="date">Izberi rojstni datum</string>
     <string name="dateInput">24-02-2023</string>
     <string name="heart_rate">Srčni utrip</string>
     <string name="heartRateInput">80 BPM</string>

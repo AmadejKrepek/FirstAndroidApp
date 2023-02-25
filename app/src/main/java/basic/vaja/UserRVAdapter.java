@@ -29,10 +29,13 @@ public class UserRVAdapter extends ListAdapter<UserEntity, UserRVAdapter.ViewHol
 
         @Override
         public boolean areContentsTheSame(UserEntity oldItem, UserEntity newItem) {
-            // below line is to check the course name, description and course duration.
+            // below line is to check the user name, description and user duration.
             return oldItem.getName().equals(newItem.getName()) &&
                     oldItem.getSurname().equals(newItem.getSurname()) &&
-                    oldItem.getDateOfBirth().equals(newItem.getDateOfBirth());
+                    oldItem.getDateOfBirth().equals(newItem.getDateOfBirth()) &&
+                    oldItem.getHeartRate().equals(newItem.getHeartRate()) &&
+                    oldItem.getSo2().equals(newItem.getSo2()) &&
+                    oldItem.getBodyTemperature().equals(newItem.getBodyTemperature());
         }
     };
 
@@ -50,20 +53,23 @@ public class UserRVAdapter extends ListAdapter<UserEntity, UserRVAdapter.ViewHol
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // below line of code is use to set data to
         // each item of our recycler view.
-        UserEntity model = getCourseAt(position);
+        UserEntity model = getuserAt(position);
         holder.name.setText(model.getName());
         holder.surname.setText(model.getSurname());
         holder.dateOfBirth.setText(model.getDateOfBirth());
+        holder.heartRate.setText(model.getHeartRate());
+        holder.so2.setText(model.getSo2());
+        holder.bodyTemperature.setText(model.getBodyTemperature());
     }
 
-    // creating a method to get course modal for a specific position.
-    public UserEntity getCourseAt(int position) {
+    // creating a method to get user modal for a specific position.
+    public UserEntity getuserAt(int position) {
         return getItem(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // view holder class to create a variable for each view.
-        TextView name, surname, dateOfBirth;
+        TextView name, surname, dateOfBirth, heartRate, so2, bodyTemperature;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +77,9 @@ public class UserRVAdapter extends ListAdapter<UserEntity, UserRVAdapter.ViewHol
             name = itemView.findViewById(R.id.idUserName);
             surname = itemView.findViewById(R.id.idUserSurname);
             dateOfBirth = itemView.findViewById(R.id.idUserDateOfBirth);
+            heartRate = itemView.findViewById(R.id.idUserHeartRate);
+            so2 = itemView.findViewById(R.id.idUserSo2);
+            bodyTemperature = itemView.findViewById(R.id.idUserBodyTemperature);
 
             // adding on click listener for each item of recycler view.
             itemView.setOnClickListener(new View.OnClickListener() {

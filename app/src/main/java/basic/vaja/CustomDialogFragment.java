@@ -23,8 +23,8 @@ public class CustomDialogFragment extends DialogFragment {
         temperature = (EditText) activity.findViewById(R.id.editTemperature);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Do you want to preview data?")
-                .setPositiveButton("Preview", new DialogInterface.OnClickListener() {
+        builder.setMessage("Do you want to save your record?")
+                .setPositiveButton("Save and Preview", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent in = new Intent(activity.getApplicationContext(), SummaryActivity.class);
