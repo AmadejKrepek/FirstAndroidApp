@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txtIme"
+        android:layout_width="74dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/name"
+        app:layout_constraintBottom_toTopOf="@+id/editIme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editIme"
+        android:layout_width="245dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="18dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/txtPriimek"
+        app:layout_constraintStart_toStartOf="@+id/txtIme"
+        app:layout_constraintTop_toBottomOf="@+id/txtIme"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <TextView
+        android:id="@+id/txtPriimek"
+        android:layout_width="69dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/surname"
+        app:layout_constraintBottom_toTopOf="@+id/editPriimek"
+        app:layout_constraintStart_toStartOf="@+id/editIme"
+        app:layout_constraintTop_toBottomOf="@+id/editIme"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/editPriimek"
+        android:layout_width="246dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="14dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/surname"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btn_date"
+        app:layout_constraintStart_toStartOf="@+id/txtPriimek"
+        app:layout_constraintTop_toBottomOf="@+id/txtPriimek"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/btn_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:text="@string/date"
+        app:layout_constraintBottom_toTopOf="@+id/in_date"
+        app:layout_constraintStart_toStartOf="@+id/editPriimek"
+        app:layout_constraintTop_toBottomOf="@+id/editPriimek" />
+
+    <EditText
+        android:id="@+id/in_date"
+        android:layout_width="215dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="21dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="none"
+        android:text="@string/dateInput"
+        app:layout_constraintBottom_toTopOf="@+id/txtHeartRate"
+        app:layout_constraintStart_toStartOf="@+id/btn_date"
+        app:layout_constraintTop_toBottomOf="@+id/btn_date" />
+
+    <TextView
+        android:id="@+id/txtHeartRate"
+        android:layout_width="220dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="9dp"
+        android:text="@string/heart_rate"
+        app:layout_constraintBottom_toTopOf="@+id/editHeartRate"
+        app:layout_constraintStart_toStartOf="@+id/in_date"
+        app:layout_constraintTop_toBottomOf="@+id/in_date" />
+
+    <EditText
+        android:id="@+id/editHeartRate"
+        android:layout_width="219dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="17dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/heartRateInput"
+        app:layout_constraintBottom_toTopOf="@+id/txtBlood"
+        app:layout_constraintStart_toStartOf="@+id/txtHeartRate"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeartRate" />
+
+    <TextView
+        android:id="@+id/txtBlood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:text="@string/blood_o2"
+        app:layout_constraintBottom_toTopOf="@+id/editBlood"
+        app:layout_constraintStart_toStartOf="@+id/editHeartRate"
+        app:layout_constraintTop_toBottomOf="@+id/editHeartRate" />
+
+    <EditText
+        android:id="@+id/editBlood"
+        android:layout_width="213dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="9dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/bloodO2Input"
+        app:layout_constraintBottom_toTopOf="@+id/txtTemperature"
+        app:layout_constraintStart_toStartOf="@+id/txtBlood"
+        app:layout_constraintTop_toBottomOf="@+id/txtBlood" />
+
+    <TextView
+        android:id="@+id/txtTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:text="@string/temperature"
+        app:layout_constraintBottom_toTopOf="@+id/editTemperature"
+        app:layout_constraintStart_toStartOf="@+id/editBlood"
+        app:layout_constraintTop_toBottomOf="@+id/editBlood" />
+
+    <EditText
+        android:id="@+id/editTemperature"
+        android:layout_width="211dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="@string/temperatureInput"
+        app:layout_constraintBottom_toTopOf="@+id/btnSend"
+        app:layout_constraintStart_toStartOf="@+id/txtTemperature"
+        app:layout_constraintTop_toBottomOf="@+id/txtTemperature" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/sendBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editTemperature"
+        app:layout_constraintTop_toBottomOf="@+id/editTemperature" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

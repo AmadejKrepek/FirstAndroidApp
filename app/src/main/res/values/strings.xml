@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Health</string>
+
+    <string name="name">Ime</string>
+    <string name="surname">Priimek</string>
+    <string name="date">Izberi datum</string>
+    <string name="dateInput">24-02-2023</string>
+    <string name="heart_rate">Srčni utrip</string>
+    <string name="heartRateInput">80 BPM</string>
+    <string name="blood_o2">Sa02</string>
+    <string name="bloodO2Input">2.1 %</string>
+    <string name="temperature">Telesna temperatura</string>
+    <string name="temperatureInput">22 °C</string>
+    <string name="sendBtn">Shrani</string>
+
+    <string name="preview_title">Preview</string>
+</resources>
