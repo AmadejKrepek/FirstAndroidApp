@@ -1,132 +1,102 @@
-package basic.vaja;
-import android.app.Application;
-import android.os.AsyncTask;
+package basic.vaja
 
-import androidx.lifecycle.LiveData;
+import android.app.Application
+import android.os.AsyncTask
+import androidx.lifecycle.LiveData
+import basic.vaja.UserDatabase.Companion.getInstance
+import java.util.concurrent.ExecutionException
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-public class UserRepository {
-
+class UserRepository(application: Application?) {
     // below line is the create a variable
     // for dao and list for all users.
-    private UserDao dao;
-    private LiveData<List<UserEntity>> allusers;
+    private val dao: UserDao
+
+    // below method is to read all the users.
+    val allusers: LiveData<List<UserEntity?>?>?
 
     // creating a constructor for our variables
     // and passing the variables to it.
-    public UserRepository(Application application) {
-        UserDatabase database = UserDatabase.getInstance(application);
-        dao = database.Dao();
-        allusers = dao.getAllUsers();
+    init {
+        val database = getInstance(application!!)
+        dao = database!!.Dao()
+        allusers = dao.allUsers
     }
 
-    public List<UserEntity> getUsers() {
-        try {
-            return new GetUsersAsyncTask().execute().get();
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    val users: List<UserEntity?>?
+        get() = try {
+            GetUsersAsyncTask().execute().get()
+        } catch (e: ExecutionException) {
+            throw RuntimeException(e)
+        } catch (e: InterruptedException) {
+            throw RuntimeException(e)
         }
 
-    }
-
     // creating a method to insert the data to our database.
-    public void insert(UserEntity model) {
-        new InsertUserAsyncTask(dao).execute(model);
+    fun insert(model: UserEntity?) {
+        InsertUserAsyncTask(dao).execute(model)
     }
 
     // creating a method to update data in database.
-    public void update(UserEntity model) {
-        new UpdateUserAsyncTask(dao).execute(model);
+    fun update(model: UserEntity?) {
+        UpdateUserAsyncTask(dao).execute(model)
     }
 
     // creating a method to delete the data in our database.
-    public void delete(UserEntity model) {
-        new DeleteUserAsyncTask(dao).execute(model);
+    fun delete(model: UserEntity?) {
+        DeleteUserAsyncTask(dao).execute(model)
     }
 
     // below is the method to delete all the users.
-    public void deleteAllusers() {
-        new DeleteAllUsersAsyncTask(dao).execute();
+    fun deleteAllusers() {
+        DeleteAllUsersAsyncTask(dao).execute()
     }
 
-    // below method is to read all the users.
-    public LiveData<List<UserEntity>> getAllusers() {
-        return allusers;
-    }
-
-    private class GetUsersAsyncTask extends AsyncTask<Void, Void, List<UserEntity>> {
-        @Override
-        protected List<UserEntity> doInBackground(Void... voids) {
-            return dao.getUsers();
+    private inner class GetUsersAsyncTask : AsyncTask<Void?, Void?, List<UserEntity?>?>() {
+        override fun doInBackground(vararg p0: Void?): List<UserEntity?>? {
+            return dao.users
         }
     }
 
     // we are creating a async task method to insert new user.
-    private static class InsertUserAsyncTask extends AsyncTask<UserEntity, Void, Void> {
-        private UserDao dao;
-
-        private InsertUserAsyncTask(UserDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(UserEntity... model) {
+    private class InsertUserAsyncTask(private val dao: UserDao) :
+        AsyncTask<UserEntity?, Void?, Void?>() {
+        override fun doInBackground(vararg model: UserEntity?): Void? {
             // below line is use to insert our modal in dao.
-            dao.insert(model[0]);
-            return null;
+            dao.insert(model[0])
+            return null
         }
     }
 
     // we are creating a async task method to update our user.
-    private static class UpdateUserAsyncTask extends AsyncTask<UserEntity, Void, Void> {
-        private UserDao dao;
-
-        private UpdateUserAsyncTask(UserDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(UserEntity... models) {
+    private class UpdateUserAsyncTask(private val dao: UserDao) :
+        AsyncTask<UserEntity?, Void?, Void?>() {
+        override fun doInBackground(vararg models: UserEntity?): Void? {
             // below line is use to update
             // our modal in dao.
-            dao.update(models[0]);
-            return null;
+            dao.update(models[0])
+            return null
         }
     }
 
     // we are creating a async task method to delete user.
-    private static class DeleteUserAsyncTask extends AsyncTask<UserEntity, Void, Void> {
-        private UserDao dao;
-
-        private DeleteUserAsyncTask(UserDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(UserEntity... models) {
+    private class DeleteUserAsyncTask(private val dao: UserDao) :
+        AsyncTask<UserEntity?, Void?, Void?>() {
+        override fun doInBackground(vararg models: UserEntity?): Void? {
             // below line is use to delete
             // our user modal in dao.
-            dao.delete(models[0]);
-            return null;
+            dao.delete(models[0])
+            return null
         }
     }
 
     // we are creating a async task method to delete all users.
-    private static class DeleteAllUsersAsyncTask extends AsyncTask<Void, Void, Void> {
-        private UserDao dao;
-        private DeleteAllUsersAsyncTask(UserDao dao) {
-            this.dao = dao;
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
+    private class DeleteAllUsersAsyncTask(private val dao: UserDao) :
+        AsyncTask<Void?, Void?, Void?>() {
+        override fun doInBackground(vararg p0: Void?): Void? {
             // on below line calling method
             // to delete all users.
-            dao.deleteAllUsers();
-            return null;
+            dao.deleteAllUsers()
+            return null
         }
     }
 }

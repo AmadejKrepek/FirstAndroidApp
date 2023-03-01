@@ -1,38 +1,24 @@
-package basic.vaja;
+package basic.vaja
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
-
-public class EditActivity extends AppCompatActivity {
-
-    private RecyclerView usersRV;
-    private static final int ADD_USER_REQUEST = 1;
-    private static final int EDIT_USER_REQUEST = 2;
-    private ViewModal viewModal;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit);
+class EditActivity : AppCompatActivity() {
+    private var usersRV: RecyclerView? = null
+    private var viewModal: ViewModal? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit)
 
         // initializing our variable for our recycler view and fab.
-        usersRV = findViewById(R.id.idRVUsers);
-/*        FloatingActionButton fab = findViewById(R.id.idFABAdd);
+        usersRV = findViewById(R.id.idRVUsers)
+        /*        FloatingActionButton fab = findViewById(R.id.idFABAdd);
 
         // adding on click listener for floating action button.
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,97 +32,94 @@ public class EditActivity extends AppCompatActivity {
         });*/
 
         // setting layout manager to our adapter class.
-        usersRV.setLayoutManager(new LinearLayoutManager(this));
-        usersRV.setHasFixedSize(true);
+        usersRV?.layoutManager = LinearLayoutManager(this)
+        usersRV?.setHasFixedSize(true)
 
         // initializing adapter for recycler view.
-        final UserRVAdapter adapter = new UserRVAdapter();
+        val adapter = UserRVAdapter()
 
         // setting adapter class for recycler view.
-        usersRV.setAdapter(adapter);
+        usersRV?.adapter = adapter
 
         // passing a data from view modal.
-        viewModal = ViewModelProviders.of(this).get(ViewModal.class);
+        viewModal = ViewModelProviders.of(this)[ViewModal::class.java]
 
         // below line is use to get all the users from view modal.
-        viewModal.getAllusers().observe(this, new Observer<List<UserEntity>>() {
-            @Override
-            public void onChanged(List<UserEntity> models) {
-                // when the data is changed in our models we are
-                // adding that list to our adapter class.
-                adapter.submitList(models);
-            }
-        });
+        viewModal!!.allusers?.observe(this) { models -> // when the data is changed in our models we are
+            // adding that list to our adapter class.
+            adapter.submitList(models)
+        }
         // below method is use to add swipe to delete method for item of recycler view.
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
+        ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
             }
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // on recycler view item swiped then we are deleting the item of our recycler view.
-                viewModal.delete(adapter.getuserAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(EditActivity.this, "user deleted", Toast.LENGTH_SHORT).show();
+                viewModal!!.delete(adapter.getuserAt(viewHolder.adapterPosition))
+                Toast.makeText(this@EditActivity, "user deleted", Toast.LENGTH_SHORT).show()
             }
-        }).
-                // below line is use to attach this to recycler view.
-                        attachToRecyclerView(usersRV);
+        }).attachToRecyclerView(usersRV)// below line is use to attach this to recycler view.
         // below line is use to set item click listener for our item of recycler view.
-        adapter.setOnItemClickListener(new UserRVAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(UserEntity model) {
-                // after clicking on item of recycler view
-                // we are opening a new activity and passing
-                // a data to our activity.
-                Intent intent = new Intent(EditActivity.this, AddUserActivity.class);
-                intent.putExtra(AddUserActivity.EXTRA_ID, model.getId());
-                intent.putExtra(AddUserActivity.EXTRA_NAME, model.getName());
-                intent.putExtra(AddUserActivity.EXTRA_SURNAME, model.getSurname());
-                intent.putExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH, model.getDateOfBirth());
-                intent.putExtra(AddUserActivity.EXTRA_HEART_RATE, model.getHeartRate());
-                intent.putExtra(AddUserActivity.EXTRA_SO2, model.getSo2());
-                intent.putExtra(AddUserActivity.EXTRA_TEMPERATURE, model.getBodyTemperature());
+        adapter.setOnItemClickListener { model -> // after clicking on item of recycler view
+            // we are opening a new activity and passing
+            // a data to our activity.
+            val intent = Intent(this@EditActivity, AddUserActivity::class.java)
+            intent.putExtra(AddUserActivity.EXTRA_ID, model.id)
+            intent.putExtra(AddUserActivity.EXTRA_NAME, model.name)
+            intent.putExtra(AddUserActivity.EXTRA_SURNAME, model.surname)
+            intent.putExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH, model.dateOfBirth)
+            intent.putExtra(AddUserActivity.EXTRA_HEART_RATE, model.heartRate)
+            intent.putExtra(AddUserActivity.EXTRA_SO2, model.so2)
+            intent.putExtra(AddUserActivity.EXTRA_TEMPERATURE, model.bodyTemperature)
 
-                // below line is to start a new activity and
-                // adding a edit user constant.
-                startActivityForResult(intent, EDIT_USER_REQUEST);
-            }
-        });
+            // below line is to start a new activity and
+            // adding a edit user constant.
+            startActivityForResult(intent, EDIT_USER_REQUEST)
+        }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_USER_REQUEST && resultCode == RESULT_OK) {
-            String name = data.getStringExtra(AddUserActivity.EXTRA_NAME);
-            String surname = data.getStringExtra(AddUserActivity.EXTRA_SURNAME);
-            String dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH);
-            String heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE);
-            String so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2);
-            String bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE);
-            UserEntity model = new UserEntity(name, surname, dateOfBirth, heartRate, so2, bodyTemperature);
-            viewModal.insert(model);
-            Toast.makeText(this, "User saved", Toast.LENGTH_SHORT).show();
+            val name = data!!.getStringExtra(AddUserActivity.EXTRA_NAME)
+            val surname = data.getStringExtra(AddUserActivity.EXTRA_SURNAME)
+            val dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH)
+            val heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE)
+            val so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2)
+            val bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE)
+            val model = UserEntity(name, surname, dateOfBirth, heartRate, so2, bodyTemperature)
+            viewModal!!.insert(model)
+            Toast.makeText(this, "User saved", Toast.LENGTH_SHORT).show()
         } else if (requestCode == EDIT_USER_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(AddUserActivity.EXTRA_ID, -1);
+            val id = data!!.getIntExtra(AddUserActivity.EXTRA_ID, -1)
             if (id == -1) {
-                Toast.makeText(this, "user can't be updated", Toast.LENGTH_SHORT).show();
-                return;
+                Toast.makeText(this, "user can't be updated", Toast.LENGTH_SHORT).show()
+                return
             }
-            String name = data.getStringExtra(AddUserActivity.EXTRA_NAME);
-            String userDesc = data.getStringExtra(AddUserActivity.EXTRA_SURNAME);
-            String dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH);
-            String heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE);
-            String so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2);
-            String bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE);
-            UserEntity model = new UserEntity(name, userDesc, dateOfBirth, heartRate, so2, bodyTemperature);
-            model.setId(id);
-            viewModal.update(model);
-            Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show();
+            val name = data.getStringExtra(AddUserActivity.EXTRA_NAME)
+            val userDesc = data.getStringExtra(AddUserActivity.EXTRA_SURNAME)
+            val dateOfBirth = data.getStringExtra(AddUserActivity.EXTRA_DATE_OF_BIRTH)
+            val heartRate = data.getStringExtra(AddUserActivity.EXTRA_HEART_RATE)
+            val so2 = data.getStringExtra(AddUserActivity.EXTRA_SO2)
+            val bodyTemperature = data.getStringExtra(AddUserActivity.EXTRA_TEMPERATURE)
+            val model = UserEntity(name, userDesc, dateOfBirth, heartRate, so2, bodyTemperature)
+            model.id = id
+            viewModal!!.update(model)
+            Toast.makeText(this, "User updated", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "User not saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not saved", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    companion object {
+        private const val ADD_USER_REQUEST = 1
+        private const val EDIT_USER_REQUEST = 2
     }
 }
